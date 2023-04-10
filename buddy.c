@@ -60,10 +60,10 @@ typedef struct {
 struct list_head free_area[MAX_ORDER+1];
 
 /* memory area */
-char g_memory[1<<MAX_ORDER];
+char g_memory[1<<MAX_ORDER]; //simulated memory space
 
 /* page structures */
-page_t g_pages[(1<<MAX_ORDER)/PAGE_SIZE];
+page_t g_pages[(1<<MAX_ORDER)/PAGE_SIZE]; //add/remove page structures to/from this as neccassary due to allocs/frees
 
 /**************************************************************************
  * Public Function Prototypes
@@ -110,6 +110,14 @@ void buddy_init()
 void *buddy_alloc(int size)
 {
 	/* TODO: IMPLEMENT THIS FUNCTION */
+	/*
+		int size is the size of the allocation that we want to perform
+		General idea
+		* Find minimum order that satisfies page size
+		* Create more pages in free area (if necessary)
+		* Select and return free page
+		* If you need to create two pages and need to return one, chose the left one (its the standard)
+	*/
 	return NULL;
 }
 
@@ -125,6 +133,12 @@ void *buddy_alloc(int size)
 void buddy_free(void *addr)
 {
 	/* TODO: IMPLEMENT THIS FUNCTION */
+	/*
+	Genearl Idea
+	* check budy pages (continuously)
+	* WHile buddy is free, combine
+	* Keep checking to see how far up the tree you can go. (Don't just stopped at the freed pair)
+	*/
 }
 
 /**

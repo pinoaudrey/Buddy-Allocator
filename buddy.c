@@ -214,7 +214,7 @@ void buddy_free(void *addr)
 {
 	/* TODO: IMPLEMENT THIS FUNCTION */
 	/*
-	Genearl Idea
+	General Idea
 	* check budy pages (continuously)
 	* While buddy is free, combine
 	* Keep checking to see how far up the tree you can go. (Don't just stop at the freed pair)

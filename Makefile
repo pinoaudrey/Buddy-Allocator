@@ -91,4 +91,7 @@ clean:
 clean-doc:
 	-rm -rf doc index.html
 
-.PHONY: all test submit unsubmit testsubmit clean
+myTest: $(PROGNAME)
+	$(MAKE) -C myTests/
+
+.PHONY: all test submit unsubmit testsubmit clean myTest

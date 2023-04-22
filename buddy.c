@@ -142,7 +142,7 @@ void *buddy_alloc(int size)
 	for (int i = MIN_ORDER; i <= MAX_ORDER; i++)
 	{
 		// See if the current order is big enough.
-		if ((1 << i) > size)
+		if ((1 << i) >= size)
 		{
 			required_page_size = i;
 			break;
@@ -181,13 +181,13 @@ void *buddy_alloc(int size)
 
 		for (int j = 0; j < index_diff; ++j)
 		{
-			g_pages[buddy_index + j].blockSize = i;
-			g_pages[this_index + j].blockSize = i;
+			g_pages[buddy_index + j].blockSize = i-1;
+			g_pages[this_index + j].blockSize = i-1;
 		}
 
 		//Make two new pages of size i-1
 		priqueue_offer(&free_area[i-1], &g_pages[this_index]);
-		priqueue_offer(&free_area[i-1], &g_pages[this_index]);
+		priqueue_offer(&free_area[i-1], &g_pages[buddy_index]);
 	}
 
 	//STEP FOUR
@@ -227,7 +227,14 @@ void buddy_free(void *addr)
 	//STEP TWO (recursion base case)
 	//If the size is already at max, do nothing!!!
 	if (g_pages[freed_index].blockSize == MAX_ORDER)
+	{
+		int count = 0;
+		for (int i = MIN_ORDER; i <= MAX_ORDER; ++i)
+			count = count + priqueue_size(&free_area[i]);
+		if (count == 0)
+			priqueue_offer(&free_area[MAX_ORDER], &g_pages[freed_index]);
 		return;
+	}
 
 	//STEP THREE
 	//Find the buddy address to the current size
@@ -268,12 +275,12 @@ void buddy_free(void *addr)
 		}
 		if(buddy_index > freed_index)
 		{
-			priqueue_offer(&free_area[curr_size+1], &g_pages[freed_index]);
+			//priqueue_offer(&free_area[curr_size+1], &g_pages[freed_index]);
 			buddy_free(PAGE_TO_ADDR(freed_index));
 		}
 		else
 		{
-			priqueue_offer(&free_area[curr_size+1], &g_pages[buddy_index]);
+			//priqueue_offer(&free_area[curr_size+1], &g_pages[buddy_index]);
 			buddy_free(PAGE_TO_ADDR(buddy_index));
 		}
 	}

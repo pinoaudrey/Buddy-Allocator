@@ -157,6 +157,9 @@ void *buddy_alloc(int size)
 		++available_page_size;
 	}
 
+	if (available_page_size > MAX_ORDER)
+		return NULL;
+
 	//STEP THREE 
 	//If neccessary, make new pages until one of the required size is available
 	for (int i = available_page_size; i > required_page_size; --i)

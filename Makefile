@@ -1,4 +1,4 @@
-STUDENT_LASTNAMES = XXXXXXX
+STUDENT_LASTNAMES = PINO-PTACEK
 PROGNAME = buddy
 
 CC = gcc -std=gnu11
@@ -12,8 +12,8 @@ CFLAGS = -Wall -g
 ####################################################################
 # NOTE: The submission scripts assume all files in `CFILES` end with
 # .c and all files in `HFILES` end in .h
-CFILES = simulator.c buddy.c
-HFILES = buddy.h list.h
+CFILES = simulator.c buddy.c libpriqueue.c
+HFILES = buddy.h list.h libpriqueue.h
 
 # Add libraries that need linked as needed (e.g. -lm -lpthread)
 LIBS =

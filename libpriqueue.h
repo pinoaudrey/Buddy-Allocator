@@ -42,6 +42,5 @@ int    priqueue_size     (priqueue_t *q);
 
 void   priqueue_destroy  (priqueue_t *q);
 
-#include "libpriqueue.c"
 
 #endif /* LIBPQUEUE_H_ */

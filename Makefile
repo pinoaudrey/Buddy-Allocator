@@ -1,4 +1,4 @@
-STUDENT_LASTNAMES = PINO-PTACEK
+STUDENT_LASTNAMES = pino-ptacek
 PROGNAME = buddy
 
 CC = gcc -std=gnu11

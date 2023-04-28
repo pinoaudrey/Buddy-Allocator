@@ -149,6 +149,9 @@ void *buddy_alloc(int size)
 		}
 	}
 
+	if (required_page_size == 0)
+		return NULL;
+
 	//STEP TWO
 	//find the smallest available page size
 	int available_page_size = required_page_size;
@@ -160,9 +163,6 @@ void *buddy_alloc(int size)
 	{
 		return NULL;
 	}
-
-	if (available_page_size > MAX_ORDER)
-		return NULL;
 
 	//STEP THREE 
 	//If neccessary, make new pages until one of the required size is available

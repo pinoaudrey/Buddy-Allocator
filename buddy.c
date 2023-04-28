@@ -138,7 +138,7 @@ void *buddy_alloc(int size)
 	*/
 	//STEP ONE
 	//Finding the minimum order that satisfies page size;
-	int required_page_size;
+	int required_page_size = 0;
 	for (int i = MIN_ORDER; i <= MAX_ORDER; i++)
 	{
 		// See if the current order is big enough.
@@ -155,6 +155,10 @@ void *buddy_alloc(int size)
 	while (priqueue_size(&free_area[available_page_size]) == 0) //Loop until you find an available page large enough to fit the process
 	{
 		++available_page_size;
+	}
+	if(available_page_size > MAX_ORDER)
+	{
+		return NULL;
 	}
 
 	if (available_page_size > MAX_ORDER)
